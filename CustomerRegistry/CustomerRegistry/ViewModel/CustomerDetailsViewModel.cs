@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CustomerRegistry.ViewModel
 {
-    class CustomerListItemViewModel
+    public class CustomerDetailsViewModel
     {
     }
 }

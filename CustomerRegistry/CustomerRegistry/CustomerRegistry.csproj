@@ -55,6 +55,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="View\CustomerDetailsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CustomerEditorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -63,17 +71,25 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Common\BaseViewModel.cs" />
+    <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Model\Address.cs" />
     <Compile Include="Model\ContactData.cs" />
     <Compile Include="Model\Country.cs" />
     <Compile Include="Model\Customer.cs" />
     <Compile Include="Model\Email.cs" />
     <Compile Include="Model\Phone.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Utils\CustomerService.cs" />
+    <Compile Include="ViewModel\CustomerDetailsViewModel.cs" />
     <Compile Include="ViewModel\CustomerEditorViewModel.cs" />
-    <Compile Include="ViewModel\CustomerListItemViewModel.cs" />
-    <Compile Include="ViewModel\CustomerListViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="View\CustomerDetailsControl.xaml.cs">
+      <DependentUpon>CustomerDetailsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\CustomerEditorView.xaml.cs">
+      <DependentUpon>CustomerEditorView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

@@ -2,8 +2,12 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:CustomerRegistry"
+             xmlns:v="clr-namespace:CustomerRegistry.View"
+             xmlns:vm="clr-namespace:CustomerRegistry.ViewModel"
              StartupUri="View/MainWindow.xaml">
     <Application.Resources>
-         
+        <DataTemplate DataType="{x:Type vm:CustomerDetailsViewModel}">
+            <v:CustomerDetailsControl/>
+        </DataTemplate>
     </Application.Resources>
 </Application>
