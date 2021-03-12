@@ -16,6 +16,8 @@ namespace CustomerRegistry.ViewModel
         private ObservableCollection<Customer> _customers;
         private Customer _selectedCustomer;
 
+        private CustomerService _customerService;
+
         private CustomerDetailsViewModel _customerDetailsViewModel;
         private CustomerEditorViewModel _customerEditorViewModel;
 
@@ -34,7 +36,17 @@ namespace CustomerRegistry.ViewModel
 
         #region API
 
-        public  CustomerService CustomerService { get; }
+        public CustomerService CustomerService
+        {
+            get => _customerService;
+            private set
+            {
+                if (value != null)
+                {
+                    _customerService = value;
+                }
+            }
+        }
 
         public ObservableCollection<Customer> Customers
         {
@@ -98,7 +110,6 @@ namespace CustomerRegistry.ViewModel
         public bool IsCustomerSelected
         {
             get => SelectedCustomer != null;
-            set => OnPropertyChanged(nameof(IsCustomerSelected));
         }
 
         #endregion
@@ -129,8 +140,8 @@ namespace CustomerRegistry.ViewModel
         private RelayCommand _deleteCustomerCommand;
         public RelayCommand DeleteCustomerCommand =>
             _deleteCustomerCommand ??
-                (_deleteCustomerCommand = new RelayCommand(
-                    ex => Customers.Remove(SelectedCustomer), canEx => IsCustomerSelected));
+                (_deleteCustomerCommand = new RelayCommand(ex => Customers.Remove(SelectedCustomer), 
+                    canEx => IsCustomerSelected));
         #endregion
 
         #region Private

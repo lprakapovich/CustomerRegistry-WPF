@@ -3,11 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:CustomerRegistry.View"
         xmlns:u="clr-namespace:CustomerRegistry.Utils"
         mc:Ignorable="d"
         Title="Customer Editor" Height="630" Width="500">
-
     <Window.Resources>
         <Style TargetType="GroupBox">
             <Setter Property="Margin" Value="10 10"/>
@@ -23,7 +21,6 @@
             <Setter Property="Margin" Value="0 5"/>
         </Style>
         <u:CountryEnumConverter x:Key="countryEnumConverter"/>
-
         <ControlTemplate x:Key="errorTemplate">
             <StackPanel>
                 <AdornedElementPlaceholder x:Name="textBox"/>
@@ -37,7 +34,6 @@
             </StackPanel>
         </ControlTemplate>
     </Window.Resources> 
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="10"/>
@@ -48,8 +44,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
-
-        <GroupBox Header="Name" Grid.Row="1">
+        <GroupBox Header="Personal Data" Grid.Row="1">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -59,18 +54,17 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Label Grid.Column="0" Grid.Row="0" Content="First Name"/>
+                <Label Grid.Column="0" Grid.Row="0" Content="* Name"/>
                 <TextBox Grid.Column="1" Grid.Row="0"
                          Validation.ErrorTemplate="{StaticResource errorTemplate}"
                          Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}">
                 </TextBox>
-                <Label Grid.Column="0" Grid.Row="1" Content="Second Name"/>
+                <Label Grid.Column="0" Grid.Row="1" Content="* Surname"/>
                 <TextBox Grid.Column="1" Grid.Row="1" 
                          Validation.ErrorTemplate="{StaticResource errorTemplate}"
                          Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}"/>
             </Grid>
         </GroupBox>
-
         <GroupBox Header="Email and phone" Grid.Row="2">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -102,7 +96,6 @@
                          Text="{Binding PrivateEmail, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}"/>
             </Grid>
         </GroupBox>
-
         <GroupBox Header="Address" Grid.Row="3">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -120,7 +113,7 @@
                 <TextBox Grid.Column="1" Grid.Row="0"
                          Validation.ErrorTemplate="{StaticResource errorTemplate}"
                          Text="{Binding Street, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}"/>
-                <Label Grid.Column="0" Grid.Row="1" Content="City"/>
+                <Label Grid.Column="0" Grid.Row="1" Content="* City"/>
                 <TextBox Grid.Column="1" Grid.Row="1" 
                          Validation.ErrorTemplate="{StaticResource errorTemplate}"
                          Text="{Binding City, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}"/>
@@ -134,7 +127,6 @@
                           SelectedItem="{Binding Country, Converter={StaticResource countryEnumConverter}}"/>
             </Grid>
         </GroupBox>
-
         <DockPanel Grid.Row="4">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -146,8 +138,5 @@
                 <Button Grid.Column="1" Content="Cancel" Command="{Binding CancelCommand}"/>
             </Grid>
         </DockPanel>
-
-        <Label Grid.Row="5" Content="{Binding IsViewModelValid, UpdateSourceTrigger=PropertyChanged}"></Label>
     </Grid>
-
 </Window>

@@ -11,44 +11,52 @@ namespace CustomerRegistry.Utils
         {
             validationErrors = new List<string>();
 
+            Action<string, string, ICollection<string>> validation = null;
+
             switch (property)
             {
                 case "FirstName":
-                    ValidateString(property, value, validationErrors); 
+                    validation = ValidateString;
                     break;
 
                 case "LastName":
-                    ValidateString(property, value, validationErrors);
+                    validation = ValidateString;
                     break;
 
                 case "HomePhone":
-                    ValidateNumber(property, value, validationErrors);
+                    validation = ValidateNumber; 
                     break;
 
                 case "CellPhone":
-                    ValidateNumber(property, value, validationErrors);
+                    validation = ValidateNumber;
                     break;
 
                 case "WorkingEmail":
-                    ValidateEmail(property, value, validationErrors);
+                    validation = ValidateEmail;
                     break;
 
                 case "PrivateEmail":
-                    ValidateEmail(property, value, validationErrors);
+                    validation = ValidateEmail;
                     break;
 
                 case "Street":
+                    validation = ValidateStringOrNumber;
                     break;
 
                 case "City":
+                    validation = ValidateString; 
                     break;
 
                 case "PostalCode":
+                    validation = ValidateStringOrNumber;
                     break;
             }
 
+            validation?.Invoke(property, value, validationErrors);
+
             return validationErrors.Count == 0;
         }
+
 
         private static void ValidateString(string property, string value, ICollection<string> errors)
         {
@@ -69,17 +77,34 @@ namespace CustomerRegistry.Utils
                 errors.Add($"{property} can contain digits [0...9] only!");
             }
         }
+
+        private static void ValidateStringOrNumber(string property, string value, ICollection<string> errors)
+        {
+            if (!ContainsCharsAndNumbersOnly(value))
+            {
+                errors.Add($"{property} should contain letters and digits only.");
+            }
+        }
              
         private static bool ContainsCharsOnly(string sequence)
         {
-            return sequence.ToCharArray().Where(c => !Char.IsWhiteSpace(c)).ToArray().All(Char.IsLetter);
+            return GetChars(sequence).All(char.IsLetter);
         }
 
         private static bool ContainsNumbersOnly(string sequence)
         {
-            return sequence.ToCharArray().Where(c => !Char.IsWhiteSpace(c)).ToArray().All(Char.IsDigit);
+            return GetChars(sequence).All(char.IsDigit);
         }
 
+        private static bool ContainsCharsAndNumbersOnly(string sequence)
+        {
+            return GetChars(sequence).All(char.IsLetterOrDigit);
+        }
+
+        private static char[] GetChars(string sequence)
+        {
+            return sequence.ToCharArray().Where(c => !char.IsWhiteSpace(c)).ToArray();
+        }
         private static void ValidateEmail(string property, string value, ICollection<string> errors)
         {
             bool isEmail = Regex.IsMatch(value,

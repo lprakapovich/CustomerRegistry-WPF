@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows;
 using CustomerRegistry.Common;
 using CustomerRegistry.Model;
 using CustomerRegistry.Utils;
@@ -25,7 +24,7 @@ namespace CustomerRegistry.ViewModel
 
         #endregion
 
-        #region Event Handlers
+        #region Events
 
         public delegate void CustomerEvent(Customer customer);
 
