@@ -37,10 +37,11 @@ namespace CustomerRegistry
             editor.Show();
         }
 
-        private void OnOpenEditor_ButtonClick(object sender, RoutedEventArgs e)
+        private void OnAddCustomer_ButtonClick(object sender, RoutedEventArgs e)
         {
-            CustomerEditorView editor = new CustomerEditorView(_dataContext.GetCustomerEditorDataContext());
-            editor.Show(); 
+            _dataContext.SelectedCustomer = null;
+            OnEditCustomer_ButtonClick(this, new RoutedEventArgs());
         }
     }
 }
+ 

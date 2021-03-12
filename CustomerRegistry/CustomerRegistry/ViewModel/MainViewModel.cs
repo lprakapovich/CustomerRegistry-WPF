@@ -27,6 +27,8 @@ namespace CustomerRegistry.ViewModel
             CustomerService = new CustomerService();
             Customers = new ObservableCollection<Customer>(CustomerService.Customers);
             Customers.CollectionChanged += Customers_CollectionChanges;
+
+            Customers.Add(new Customer("Liza", "Pr", new ContactData())); 
         }
 
         #endregion
@@ -53,13 +55,11 @@ namespace CustomerRegistry.ViewModel
             get => _selectedCustomer;
             set
             {
-                if (value != null)
-                {
-                    _selectedCustomer = value;
-                    IsSelected = true;
-                    CustomerDetailsViewModel = new CustomerDetailsViewModel(SelectedCustomer);
-                    OnPropertyChanged(nameof(SelectedCustomer));
-                }
+                _selectedCustomer = value; 
+                IsSelected = true;
+                CustomerDetailsViewModel = new CustomerDetailsViewModel(SelectedCustomer); 
+                OnPropertyChanged(nameof(SelectedCustomer));
+                
             }
         }
 
