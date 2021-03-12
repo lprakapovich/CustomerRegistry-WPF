@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
@@ -56,17 +57,10 @@ namespace CustomerRegistry.ViewModel
             set
             {
                 _selectedCustomer = value; 
-                IsSelected = true;
                 CustomerDetailsViewModel = new CustomerDetailsViewModel(SelectedCustomer); 
                 OnPropertyChanged(nameof(SelectedCustomer));
                 
             }
-        }
-
-        public bool IsSelected
-        {
-            get => SelectedCustomer != null;
-            set { OnPropertyChanged(nameof(IsSelected)); }
         }
 
         public CustomerDetailsViewModel CustomerDetailsViewModel
@@ -106,14 +100,34 @@ namespace CustomerRegistry.ViewModel
 
         #endregion
 
+        #region Events
+
+        public event EventHandler AddCustomerEvent;
+
+        public event EventHandler EditCustomerEvent;
+
+        #endregion
+
         #region Commands
+
+        private RelayCommand _addCustomerCommand;
+        public RelayCommand AddCustomerCommand => 
+            _addCustomerCommand ??
+                (_addCustomerCommand = new RelayCommand(ex => AddCustomerEvent?.Invoke(this, new EventArgs())));
+
+
+        private RelayCommand _editCustomerCommand;
+        public RelayCommand EditCustomerCommand => 
+            _editCustomerCommand ??
+            (_editCustomerCommand = new RelayCommand(ex => EditCustomerEvent?.Invoke(this, new EventArgs()),
+                canEx => SelectedCustomer != null));
+
 
         private RelayCommand _deleteCustomerCommand;
         public RelayCommand DeleteCustomerCommand =>
             _deleteCustomerCommand ??
                 (_deleteCustomerCommand = new RelayCommand(
-                    ex => Customers.Remove(SelectedCustomer),
-                    canEx => SelectedCustomer != null));
+                    ex => Customers.Remove(SelectedCustomer), canEx => SelectedCustomer != null));
         #endregion
 
         #region Private

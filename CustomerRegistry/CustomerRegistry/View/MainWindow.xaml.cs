@@ -29,15 +29,17 @@ namespace CustomerRegistry
             InitializeComponent();
             this.DataContext = new MainViewModel();
             _dataContext = (MainViewModel) this.DataContext;
+            _dataContext.AddCustomerEvent += OnAddCustomer_ButtonClick;
+            _dataContext.EditCustomerEvent += OnEditCustomer_ButtonClick;
         }
 
-        private void OnEditCustomer_ButtonClick(object sender, RoutedEventArgs e)
+        private void OnEditCustomer_ButtonClick(object sender, EventArgs e)
         {
             CustomerEditorView editor = new CustomerEditorView(_dataContext.GetCustomerEditorDataContext());
             editor.Show();
         }
 
-        private void OnAddCustomer_ButtonClick(object sender, RoutedEventArgs e)
+        private void OnAddCustomer_ButtonClick(object sender, EventArgs e)
         {
             _dataContext.SelectedCustomer = null;
             OnEditCustomer_ButtonClick(this, new RoutedEventArgs());
