@@ -11,18 +11,31 @@
     <Window.Resources>
         <Style TargetType="GroupBox">
             <Setter Property="Margin" Value="10 10"/>
-            <Setter Property="Padding" Value="5 5"></Setter>
+            <Setter Property="Padding" Value="5 5"/>
         </Style>
         <Style TargetType="Button">
-            <Setter Property="Margin" Value="20 5"></Setter>
+            <Setter Property="Margin" Value="20 5"/>
         </Style>
         <Style TargetType="TextBox">
-            <Setter Property="Margin" Value="0 5"></Setter>
+            <Setter Property="Margin" Value="0 5"/>
         </Style>
         <Style TargetType="Label">
-            <Setter Property="Margin" Value="0 5"></Setter>
+            <Setter Property="Margin" Value="0 5"/>
         </Style>
         <u:CountryEnumConverter x:Key="countryEnumConverter"/>
+
+        <ControlTemplate x:Key="errorTemplate">
+            <StackPanel>
+                <AdornedElementPlaceholder x:Name="textBox"/>
+                <ItemsControl ItemsSource="{Binding}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding ErrorContent}" Foreground="Red"></TextBlock>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </ControlTemplate>
     </Window.Resources> 
 
     <Grid>
@@ -47,9 +60,14 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Label Grid.Column="0" Grid.Row="0" Content="First Name"/>
-                <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                <TextBox Grid.Column="1" Grid.Row="0"
+                         Validation.ErrorTemplate="{StaticResource errorTemplate}"
+                         Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}">
+                </TextBox>
                 <Label Grid.Column="0" Grid.Row="1" Content="Second Name"/>
-                <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                <TextBox Grid.Column="1" Grid.Row="1" 
+                         Validation.ErrorTemplate="{StaticResource errorTemplate}"
+                         Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}"/>
             </Grid>
         </GroupBox>
 
@@ -67,13 +85,21 @@
                 </Grid.RowDefinitions>
 
                 <Label Grid.Column="0" Grid.Row="0" Content="Home phone"/>
-                <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding HomePhone}"/>
+                <TextBox Grid.Column="1" Grid.Row="0" 
+                         Validation.ErrorTemplate="{StaticResource errorTemplate}"
+                         Text="{Binding HomePhone, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}"/>
                 <Label Grid.Column="0" Grid.Row="1" Content="Cell phone"/>
-                <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding CellPhone}"/>
+                <TextBox Grid.Column="1" Grid.Row="1" 
+                         Validation.ErrorTemplate="{StaticResource errorTemplate}"
+                         Text="{Binding CellPhone, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}"/>
                 <Label Grid.Column="0" Grid.Row="2" Content="Email, business"/>
-                <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding WorkingEmail}"/>
+                <TextBox Grid.Column="1" Grid.Row="2"
+                         Validation.ErrorTemplate="{StaticResource errorTemplate}"
+                         Text="{Binding WorkingEmail, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}"/>
                 <Label Grid.Column="0" Grid.Row="3" Content="Email, private"/>
-                <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding PrivateEmail}"/>
+                <TextBox Grid.Column="1" Grid.Row="3"
+                         Validation.ErrorTemplate="{StaticResource errorTemplate}"
+                         Text="{Binding PrivateEmail, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}"/>
             </Grid>
         </GroupBox>
 
@@ -91,11 +117,17 @@
                 </Grid.RowDefinitions>
 
                 <Label Grid.Column="0" Grid.Row="0" Content="Street"/>
-                <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding Street}"/>
+                <TextBox Grid.Column="1" Grid.Row="0"
+                         Validation.ErrorTemplate="{StaticResource errorTemplate}"
+                         Text="{Binding Street, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}"/>
                 <Label Grid.Column="0" Grid.Row="1" Content="City"/>
-                <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding City}"/>
+                <TextBox Grid.Column="1" Grid.Row="1" 
+                         Validation.ErrorTemplate="{StaticResource errorTemplate}"
+                         Text="{Binding City, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}"/>
                 <Label Grid.Column="0" Grid.Row="2" Content="Postal code"/>
-                <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding PostalCode}"/>
+                <TextBox Grid.Column="1" Grid.Row="2"
+                         Validation.ErrorTemplate="{StaticResource errorTemplate}"
+                         Text="{Binding PostalCode, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnNotifyDataErrors=True}"/>
                 <Label Grid.Column="0" Grid.Row="3" Content="Country"/>
                 <ComboBox Grid.Column="1" Grid.Row="3" 
                           ItemsSource="{Binding Source={StaticResource countryEnumConverter},Path=EnumStrings}"

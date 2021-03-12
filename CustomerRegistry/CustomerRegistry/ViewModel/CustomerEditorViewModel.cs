@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using CustomerRegistry.Common;
 using CustomerRegistry.Model;
+using CustomerRegistry.Utils;
 
 namespace CustomerRegistry.ViewModel
 {
@@ -49,6 +51,7 @@ namespace CustomerRegistry.ViewModel
                 if (value != null)
                 {
                     Customer.FirstName = value;
+                    ValidateProperty(nameof(FirstName), FirstName);
                     OnPropertyChanged(nameof(FirstName));
                 }
             }
@@ -62,6 +65,7 @@ namespace CustomerRegistry.ViewModel
                 if (value != null)
                 {
                     Customer.LastName = value;
+                    ValidateProperty(nameof(LastName), LastName);
                     OnPropertyChanged(nameof(LastName));
                 }
             }
@@ -75,6 +79,7 @@ namespace CustomerRegistry.ViewModel
                 if (value != null)
                 {
                     Customer.ContactData.Phone.HomeNumber = value;
+                    ValidateProperty(nameof(HomePhone), HomePhone);
                     OnPropertyChanged(nameof(HomePhone));
                 }
             }
@@ -88,6 +93,7 @@ namespace CustomerRegistry.ViewModel
                 if (value != null)
                 {
                     Customer.ContactData.Phone.CellNumber = value;
+                    ValidateProperty(nameof(CellPhone), CellPhone);
                     OnPropertyChanged(nameof(CellPhone));
                 }
             }
@@ -191,5 +197,24 @@ namespace CustomerRegistry.ViewModel
             (_cancelCommand = new RelayCommand(e => CloseWindow(this, new EventArgs())));
 
         #endregion
+
+        private void ValidateProperty(string property, string value)
+        {
+            ICollection<string> validationErrors = null;
+
+            bool isValid = ValidationService.IsValid(property, value, out validationErrors);
+
+            if (!isValid)
+            {
+                _validationErrors[property] = validationErrors;
+                RaiseErrorsChanged(property); 
+            }
+
+            else if (_validationErrors.ContainsKey(property))
+            {
+                _validationErrors.Remove(property);
+                RaiseErrorsChanged(property);
+            }
+        }
     }
 }
