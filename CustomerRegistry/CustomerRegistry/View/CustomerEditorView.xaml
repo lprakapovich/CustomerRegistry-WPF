@@ -146,5 +146,8 @@
                 <Button Grid.Column="1" Content="Cancel" Command="{Binding CancelCommand}"/>
             </Grid>
         </DockPanel>
+
+        <Label Grid.Row="5" Content="{Binding IsViewModelValid, UpdateSourceTrigger=PropertyChanged}"></Label>
     </Grid>
+
 </Window>

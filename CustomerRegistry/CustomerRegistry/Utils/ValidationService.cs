@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace CustomerRegistry.Utils
 {
@@ -28,12 +27,15 @@ namespace CustomerRegistry.Utils
                     break;
 
                 case "CellPhone":
+                    ValidateNumber(property, value, validationErrors);
                     break;
 
                 case "WorkingEmail":
+                    ValidateEmail(property, value, validationErrors);
                     break;
 
                 case "PrivateEmail":
+                    ValidateEmail(property, value, validationErrors);
                     break;
 
                 case "Street":
@@ -77,6 +79,18 @@ namespace CustomerRegistry.Utils
         private static bool ContainsNumbersOnly(string sequence)
         {
             return sequence.ToCharArray().Where(c => !Char.IsWhiteSpace(c)).ToArray().All(Char.IsDigit);
+        }
+
+        private static void ValidateEmail(string property, string value, ICollection<string> errors)
+        {
+            bool isEmail = Regex.IsMatch(value,
+                @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z", 
+                RegexOptions.IgnoreCase);
+
+            if (!isEmail)
+            {
+                errors.Add($"{property} doesn't match email regex.");
+            }
         }
     }
 }

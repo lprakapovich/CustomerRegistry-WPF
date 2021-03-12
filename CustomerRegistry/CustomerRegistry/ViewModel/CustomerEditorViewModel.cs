@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using CustomerRegistry.Common;
 using CustomerRegistry.Model;
 using CustomerRegistry.Utils;
@@ -107,6 +108,7 @@ namespace CustomerRegistry.ViewModel
                 if (value != null)
                 {
                     Customer.ContactData.Email.WorkingEmail = value;
+                    ValidateProperty(nameof(WorkingEmail), WorkingEmail);
                     OnPropertyChanged(nameof(WorkingEmail));
                 }
             }
@@ -120,6 +122,7 @@ namespace CustomerRegistry.ViewModel
                 if (value != null)
                 {
                     Customer.ContactData.Email.PrivateEmail = value;
+                    ValidateProperty(nameof(PrivateEmail), PrivateEmail);
                     OnPropertyChanged(nameof(PrivateEmail));
                 }
             }
@@ -185,8 +188,8 @@ namespace CustomerRegistry.ViewModel
                 _saveCustomerCommand ?? 
                 (_saveCustomerCommand = new RelayCommand(e =>
                     {
-                        SaveCustomerDetailsEvent.Invoke(Customer);
-                        CloseWindow(this, new EventArgs());
+                        SaveCustomerDetailsEvent?.Invoke(Customer);
+                        CloseWindow?.Invoke(this, new EventArgs());
                     }
                 ));
         }
@@ -194,27 +197,36 @@ namespace CustomerRegistry.ViewModel
         private RelayCommand _cancelCommand;
         public RelayCommand CancelCommand =>
             _cancelCommand ??
-            (_cancelCommand = new RelayCommand(e => CloseWindow(this, new EventArgs())));
+            (_cancelCommand = new RelayCommand(e => CloseWindow?.Invoke(this, new EventArgs())));
 
         #endregion
 
+        #region Validation
+
         private void ValidateProperty(string property, string value)
         {
-            ICollection<string> validationErrors = null;
-
-            bool isValid = ValidationService.IsValid(property, value, out validationErrors);
+            bool isValid = ValidationService.IsValid(property, value, out ICollection<string> validationErrors);
 
             if (!isValid)
             {
                 _validationErrors[property] = validationErrors;
                 RaiseErrorsChanged(property); 
+                OnPropertyChanged(nameof(IsViewModelValid));
             }
 
             else if (_validationErrors.ContainsKey(property))
             {
                 _validationErrors.Remove(property);
                 RaiseErrorsChanged(property);
+                OnPropertyChanged(nameof(IsViewModelValid));
             }
         }
+
+        /*
+         * Public because it is only used for data binding and has no setter
+         */
+        public bool IsViewModelValid => !_validationErrors.Any();
+
+        #endregion
     }
 }
