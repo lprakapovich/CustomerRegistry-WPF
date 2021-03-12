@@ -8,12 +8,25 @@ namespace CustomerRegistry.Model
 {
     public class Phone
     {
-        private string _phoneNumber;
+        private string _homeNumber;
+        private string _cellNumber;
 
-        public string PhoneNumber
+        public Phone(string homeNumber, string cellNumber)
         {
-            get => _phoneNumber;
-            set => _phoneNumber = value;
+            _homeNumber = homeNumber;
+            _cellNumber = cellNumber;
+        }
+
+        public string HomeNumber
+        {
+            get => _homeNumber;
+            set => _homeNumber = value;
+        }
+
+        public string CellNumber
+        {
+            get => _cellNumber;
+            set => _cellNumber = value;
         }
 
         public override bool Equals(object obj)
@@ -25,7 +38,7 @@ namespace CustomerRegistry.Model
 
             Phone phone = (Phone) obj;
 
-            return phone.PhoneNumber.Equals(_phoneNumber);
+            return phone.HomeNumber.Equals(_homeNumber);
         }
     }
 

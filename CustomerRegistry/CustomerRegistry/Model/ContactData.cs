@@ -12,6 +12,13 @@ namespace CustomerRegistry.Model
         private Email _email;
         private Phone _phone;
 
+        public ContactData(Address address, Email email, Phone phone)
+        {
+            _address = address;
+            _email = email;
+            _phone = phone;
+        }
+
         public Address Address
         {
             get => _address;
@@ -39,8 +46,7 @@ namespace CustomerRegistry.Model
 
             ContactData contactData = (ContactData) obj;
 
-            return contactData.Address.Equals(_address) && contactData.Email.Equals(_email)
-                                                        && contactData.Phone.Equals(_phone);
+            return contactData.Address.Equals(_address) && contactData.Email.Equals(_email) && contactData.Phone.Equals(_phone);
         }
     }
 }

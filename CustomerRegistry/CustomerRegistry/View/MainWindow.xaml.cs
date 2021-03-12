@@ -31,12 +31,9 @@ namespace CustomerRegistry
             _dataContext = (MainViewModel) this.DataContext;
         }
 
-        private void OnAddCustomer_ButtonClick(object sender, RoutedEventArgs e)
+        private void OnOpenCustomerEditor_ButtonClick(object sender, RoutedEventArgs e)
         {
-            CustomerEditorViewModel customerEditorViewModel = new CustomerEditorViewModel(new Customer("Liza", "P", null));
-            _dataContext.CustomerEditorViewModel = customerEditorViewModel;
-
-            CustomerEditorView editor = new CustomerEditorView(customerEditorViewModel);
+            CustomerEditorView editor = new CustomerEditorView(_dataContext.GetCustomerEditorDataContext());
             editor.Show();
         }
     }

@@ -10,7 +10,7 @@ using CustomerRegistry.Utils;
 
 namespace CustomerRegistry.ViewModel
 {
-    public class MainViewModel: BaseViewModel
+    public class MainViewModel: BindableBase
     {
         #region Private fields
 
@@ -31,6 +31,7 @@ namespace CustomerRegistry.ViewModel
             Customers.CollectionChanged += Customers_CollectionChanges;
 
             CustomerDetailsViewModel = new CustomerDetailsViewModel();
+            Customers.Add(new Customer("Liza", "P", new ContactData(new Address(Country.Afghanistan, "v", "c", "c"), new Email(), new Phone("d", "c"))));
         }
 
         #endregion
@@ -91,16 +92,25 @@ namespace CustomerRegistry.ViewModel
             }
         }
 
-        #endregion
-
-        #region Commands
-
-        private RelayCommand _deleteCustomer;
-
-        public RelayCommand DeleteCustomer
+        public CustomerEditorViewModel GetCustomerEditorDataContext()
         {
-            get => _deleteCustomer;
-            
+            var customerEditorViewModel = new CustomerEditorViewModel(SelectedCustomer);
+            customerEditorViewModel.SaveCustomerDetailsEvent += OnCustomerDetailsSaved;
+            return customerEditorViewModel;
+        }
+
+        private void OnCustomerDetailsSaved(Customer customer)
+        {
+            var optionalCustomer = Customers.FirstOrDefault(c => c.Id == customer.Id);
+
+            if (optionalCustomer == null)
+            {
+                Customers.Add(customer);
+            }
+            else
+            {
+                Customers[Customers.IndexOf(optionalCustomer)] = customer;
+            }
         }
 
         public CustomerDetailsViewModel DetailsViewModel
@@ -111,12 +121,25 @@ namespace CustomerRegistry.ViewModel
 
         #endregion
 
-        #region Event Handlers
+        #region Commands
 
-        public event EventHandler AddCustomer;
-        public event EventHandler EditCustomer;
+        private RelayCommand _deleteCustomer;
+        public RelayCommand DeleteCustomer
+        {
+            get => _deleteCustomer;
+            set
+            {
+                if (value != null)
+                {
+                    _deleteCustomer = value;
+                }
+            }
+        }
+
+      
 
         #endregion
+
 
         #region Private
 
@@ -141,8 +164,15 @@ namespace CustomerRegistry.ViewModel
                     MessageBox.Show("Replacing a customer");
                     List<Customer> tempListOfItems = e.NewItems.OfType<Customer>().ToList();
                     CustomerService.UpdateCustomer(tempListOfItems[0]);
+                    MessageBox.Show("Replaced a customer" + tempListOfItems[0].FirstName);
+
                     break;
             }
+        }
+
+        private void RemoveCustomerFromCollection()
+        {
+
         }
 
         #endregion

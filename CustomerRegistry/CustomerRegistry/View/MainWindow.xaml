@@ -41,11 +41,11 @@
 
                 <ListBox  Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3" Width="400" Height="300"
                           SelectedItem="{Binding SelectedCustomer}"
-                          ItemsSource="{Binding Customers}"/>
+                          ItemsSource="{Binding Customers, UpdateSourceTrigger=PropertyChanged}"/>
 
-                <Button Grid.Column="1" Grid.Row="2" Content="Add" Margin="5 5" Click="OnAddCustomer_ButtonClick"/>
-                <Button Grid.Column="2" Grid.Row="2" Content="Edit"  Margin="5 5"/>
-                <Button Grid.Column="3" Grid.Row="2" Content="Delete"  Margin="5 5"/> 
+                <Button Grid.Column="1" Grid.Row="2" Content="Add" Margin="5 5" Click="OnOpenCustomerEditor_ButtonClick"/>
+                <Button Grid.Column="2" Grid.Row="2" Content="Edit"  Margin="5 5" Click="OnOpenCustomerEditor_ButtonClick"/>
+                <Button Grid.Column="3" Grid.Row="2" Content="Delete"  Margin="5 5"/>
             </Grid>
         </GroupBox>
 

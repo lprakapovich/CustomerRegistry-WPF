@@ -8,34 +8,30 @@ namespace CustomerRegistry.Model
 {
     public class Email
     {
-        private string _personalEmail;
+        private string _privateEmail;
         private string _workingEmail;
         
-        public Email()
-        {
-        }
+        public Email() { }
 
-        public Email(string workingEmail) : this(workingEmail, string.Empty)
-        {
-        }
+        public Email(string workingEmail) : this(workingEmail, string.Empty) { }
 
         public Email(Email other)
         {
-            this._personalEmail = other._personalEmail;
+            this._privateEmail = other._privateEmail;
             this._workingEmail = other._workingEmail;
         }
 
-        public Email(string workingEmail, string personalEmail)
+        public Email(string workingEmail, string privateEmail)
         {
             _workingEmail = workingEmail;
-            this._personalEmail = personalEmail; 
+            this._privateEmail = privateEmail; 
         }
 
-        public string PersonalEmail
+        public string PrivateEmail
         {
-            get => _personalEmail;
+            get => _privateEmail;
 
-            set => _personalEmail = value;
+            set => _privateEmail = value;
         }
 
         public string WorkingEmail
@@ -54,7 +50,7 @@ namespace CustomerRegistry.Model
 
             Email email = (Email) obj;
 
-            return email.PersonalEmail.Equals(_personalEmail) && email.WorkingEmail.Equals(_workingEmail);
+            return email.PrivateEmail.Equals(_privateEmail) && email.WorkingEmail.Equals(_workingEmail);
         }
     }
 }

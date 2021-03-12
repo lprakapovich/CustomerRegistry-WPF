@@ -20,6 +20,7 @@ namespace CustomerRegistry.View
     /// </summary>
     public partial class CustomerEditorView : Window
     {
+        private readonly CustomerEditorViewModel _dataContext;  
         public CustomerEditorView()
         {
             InitializeComponent();
@@ -28,6 +29,13 @@ namespace CustomerRegistry.View
         public CustomerEditorView(CustomerEditorViewModel dataContext) : this()
         {
             this.DataContext = dataContext;
+            _dataContext = dataContext;
+            _dataContext.CloseWindow += OnCancel;
+        }
+
+        void OnCancel(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }

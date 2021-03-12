@@ -71,7 +71,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Common\BaseViewModel.cs" />
+    <Compile Include="Common\BindableBase.cs" />
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Model\Address.cs" />
     <Compile Include="Model\ContactData.cs" />
