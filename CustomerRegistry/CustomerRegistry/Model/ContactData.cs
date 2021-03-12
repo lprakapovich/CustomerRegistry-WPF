@@ -1,11 +1,12 @@
-﻿
-namespace CustomerRegistry.Model
+﻿namespace CustomerRegistry.Model
 {
     public class ContactData
     {
         private Address _address;
         private Email _email;
         private Phone _phone;
+
+        public ContactData() : this(new Address(), new Email(), new Phone()) { }
 
         public ContactData(Address address, Email email, Phone phone)
         {

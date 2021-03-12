@@ -17,6 +17,7 @@ namespace CustomerRegistry.ViewModel
         #endregion
 
         #region Setup
+
         public CustomerEditorViewModel(Customer customer)
         {
             Customer = customer;

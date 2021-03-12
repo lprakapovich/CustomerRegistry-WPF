@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using System;
 
 namespace CustomerRegistry.Model
 {
@@ -13,9 +10,9 @@ namespace CustomerRegistry.Model
         private string _street;
         private string _postalCode;
 
-        public Address()
-        {
-        }
+        public Address() : this(Country.Afghanistan, string.Empty, string.Empty) { }
+
+        public Address(Country country, string city, string street) : this(country, city, street, string.Empty) { }
 
         public Address(Country country, string city, string street, string postalCode)
         {

@@ -10,7 +10,7 @@ namespace CustomerRegistry.Model
         private string _lastName;
         private ContactData _contactData;
 
-        public Customer() : this(string.Empty, string.Empty, new ContactData(new Address(), new Email(), new Phone())) { }
+        public Customer() : this(string.Empty, string.Empty, new ContactData()) { }
 
         public Customer(string firstName, string lastName, ContactData contactData) : this(Guid.NewGuid().ToString())
         {

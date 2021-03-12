@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
-using System.Windows;
 using CustomerRegistry.Common;
 using CustomerRegistry.Model;
 using CustomerRegistry.Utils;
@@ -65,7 +63,6 @@ namespace CustomerRegistry.ViewModel
             }
         }
 
-        
         public bool IsSelected
         {
             get => SelectedCustomer != null;
@@ -101,7 +98,7 @@ namespace CustomerRegistry.ViewModel
         public CustomerEditorViewModel GetCustomerEditorDataContext()
         {
             return new CustomerEditorViewModel(SelectedCustomer ?? new Customer())
-            {
+            { 
                 SaveCustomerDetailsEvent = OnCustomerDetailsSaved
             };
         }
