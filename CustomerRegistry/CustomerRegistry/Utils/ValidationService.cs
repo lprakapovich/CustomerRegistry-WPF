@@ -10,7 +10,6 @@ namespace CustomerRegistry.Utils
         public static bool IsValid(string property, string value, out ICollection<string> validationErrors)
         {
             validationErrors = new List<string>();
-            int count = 0;
 
             switch (property)
             {

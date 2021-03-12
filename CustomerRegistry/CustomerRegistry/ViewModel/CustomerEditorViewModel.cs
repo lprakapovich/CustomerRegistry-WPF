@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 using CustomerRegistry.Common;
 using CustomerRegistry.Model;
 using CustomerRegistry.Utils;
@@ -177,6 +178,8 @@ namespace CustomerRegistry.ViewModel
             }
         }
 
+        public Action<string> MessageBoxDelegate { get; set; }
+
         #endregion
 
         #region Commands
@@ -188,8 +191,19 @@ namespace CustomerRegistry.ViewModel
                 _saveCustomerCommand ?? 
                 (_saveCustomerCommand = new RelayCommand(e =>
                     {
-                        SaveCustomerDetailsEvent?.Invoke(Customer);
-                        CloseWindow?.Invoke(this, new EventArgs());
+                        if (MissingRequiredFields)
+                        {
+                            MessageBoxDelegate("Please, fill all the required fields");
+                        } 
+                        else if (!IsViewModelValid)
+                        {
+                            MessageBoxDelegate("Some fields are invalid");
+                        }
+                        else
+                        {
+                            SaveCustomerDetailsEvent?.Invoke(Customer);
+                            CloseWindow?.Invoke(this, new EventArgs());
+                        }
                     }
                 ));
         }
@@ -222,11 +236,10 @@ namespace CustomerRegistry.ViewModel
             }
         }
 
-        /*
-         * Public because it is only used for data binding and has no setter
-         */
-        public bool IsViewModelValid => !_validationErrors.Any();
+        private bool IsViewModelValid => !_validationErrors.Any();
 
+        private bool MissingRequiredFields => string.IsNullOrWhiteSpace(FirstName) || string.IsNullOrWhiteSpace(LastName) || string.IsNullOrWhiteSpace(City);
+        
         #endregion
     }
 }

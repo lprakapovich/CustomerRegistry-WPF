@@ -126,22 +126,18 @@ namespace CustomerRegistry.ViewModel
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
-                    MessageBox.Show("Adding a customer");
                     int newIndex = e.NewStartingIndex;
                     CustomerService.AddCustomer(Customers[newIndex]);
                     break;
 
                 case NotifyCollectionChangedAction.Remove:
-                    MessageBox.Show("Removing a customer");
                     List<Customer> tempListOfRemovedItems = e.OldItems.OfType<Customer>().ToList();
                     CustomerService.DeleteCustomer(tempListOfRemovedItems[0].Id);
                     break;
 
                 case NotifyCollectionChangedAction.Replace:
-                    MessageBox.Show("Replacing a customer");
                     List<Customer> tempListOfItems = e.NewItems.OfType<Customer>().ToList();
                     CustomerService.UpdateCustomer(tempListOfItems[0]);
-                    MessageBox.Show("Replaced a customer" + tempListOfItems[0].FirstName);
                     SelectedCustomer = null;
                     break;
             }

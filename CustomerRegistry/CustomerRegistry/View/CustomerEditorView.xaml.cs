@@ -31,6 +31,12 @@ namespace CustomerRegistry.View
             this.DataContext = dataContext;
             _dataContext = dataContext;
             _dataContext.CloseWindow += OnCancel;
+            _dataContext.MessageBoxDelegate += OnHandle_MessageBoxDelegate;
+        }
+
+        private void OnHandle_MessageBoxDelegate(string message)
+        {
+            MessageBox.Show(message);
         }
 
         void OnCancel(object sender, EventArgs e)
