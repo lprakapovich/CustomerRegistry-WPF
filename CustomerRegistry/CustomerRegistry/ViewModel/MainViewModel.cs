@@ -28,8 +28,6 @@ namespace CustomerRegistry.ViewModel
             CustomerService = new CustomerService();
             Customers = new ObservableCollection<Customer>(CustomerService.Customers);
             Customers.CollectionChanged += Customers_CollectionChanges;
-
-            Customers.Add(new Customer("Liza", "Pr", new ContactData())); 
         }
 
         #endregion
@@ -59,7 +57,7 @@ namespace CustomerRegistry.ViewModel
                 _selectedCustomer = value; 
                 CustomerDetailsViewModel = new CustomerDetailsViewModel(SelectedCustomer); 
                 OnPropertyChanged(nameof(SelectedCustomer));
-                
+                OnPropertyChanged(nameof(IsCustomerSelected));
             }
         }
 
@@ -91,12 +89,17 @@ namespace CustomerRegistry.ViewModel
 
         public CustomerEditorViewModel GetCustomerEditorDataContext()
         {
-            return new CustomerEditorViewModel(SelectedCustomer ?? new Customer())
+            return new CustomerEditorViewModel(SelectedCustomer?.DeepCopy() ?? new Customer())
             { 
                 SaveCustomerDetailsEvent = OnCustomerDetailsSaved
             };
         }
 
+        public bool IsCustomerSelected
+        {
+            get => SelectedCustomer != null;
+            set => OnPropertyChanged(nameof(IsCustomerSelected));
+        }
 
         #endregion
 
@@ -127,7 +130,7 @@ namespace CustomerRegistry.ViewModel
         public RelayCommand DeleteCustomerCommand =>
             _deleteCustomerCommand ??
                 (_deleteCustomerCommand = new RelayCommand(
-                    ex => Customers.Remove(SelectedCustomer), canEx => SelectedCustomer != null));
+                    ex => Customers.Remove(SelectedCustomer), canEx => IsCustomerSelected));
         #endregion
 
         #region Private
@@ -138,6 +141,7 @@ namespace CustomerRegistry.ViewModel
             {
                 case NotifyCollectionChangedAction.Add:
                     int newIndex = e.NewStartingIndex;
+                    SelectedCustomer = Customers[newIndex];
                     CustomerService.AddCustomer(Customers[newIndex]);
                     break;
 
@@ -148,8 +152,8 @@ namespace CustomerRegistry.ViewModel
 
                 case NotifyCollectionChangedAction.Replace:
                     List<Customer> tempListOfItems = e.NewItems.OfType<Customer>().ToList();
+                    SelectedCustomer = tempListOfItems[0];
                     CustomerService.UpdateCustomer(tempListOfItems[0]);
-                    SelectedCustomer = null;
                     break;
             }
         }

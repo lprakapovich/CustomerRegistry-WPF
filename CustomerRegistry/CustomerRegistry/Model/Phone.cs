@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace CustomerRegistry.Model
 {
+    [Serializable]
     public class Phone
     {
         private string _homeNumber;
         private string _cellNumber;
 
-        public Phone()
+        public Phone() : this(string.Empty, string.Empty)
         {
         }
 

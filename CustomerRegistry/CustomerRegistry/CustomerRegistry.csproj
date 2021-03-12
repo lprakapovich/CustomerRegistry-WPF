@@ -82,7 +82,9 @@
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Utils\CountryEnumConverter.cs" />
     <Compile Include="Utils\CustomerService.cs" />
+    <Compile Include="Utils\ExtensionMethods.cs" />
     <Compile Include="Utils\ValidationService.cs" />
+    <Compile Include="Utils\VisibilityConverter.cs" />
     <Compile Include="ViewModel\CustomerDetailsViewModel.cs" />
     <Compile Include="ViewModel\CustomerEditorViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />

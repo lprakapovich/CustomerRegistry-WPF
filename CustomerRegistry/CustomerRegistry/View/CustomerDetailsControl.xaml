@@ -33,7 +33,7 @@
             <TextBlock.Text>
                 <MultiBinding StringFormat="{} {0} {1}">
                 <Binding Path="Customer.FirstName"/>
-                <Binding Path="Customer.ContactData.Address.City"/>
+                <Binding Path="Customer.LastName"/>
                 </MultiBinding>
             </TextBlock.Text>
         </TextBlock>

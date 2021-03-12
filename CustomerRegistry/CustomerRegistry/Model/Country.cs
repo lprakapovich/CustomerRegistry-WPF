@@ -1,5 +1,8 @@
-﻿namespace CustomerRegistry.Model
+﻿using System;
+
+namespace CustomerRegistry.Model
 {
+    [Serializable]
     public enum Country
     {
         Afghanistan,

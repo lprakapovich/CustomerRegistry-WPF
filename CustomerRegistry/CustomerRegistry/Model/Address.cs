@@ -3,6 +3,7 @@ using System;
 
 namespace CustomerRegistry.Model
 {
+    [Serializable]
     public class Address
     {
         private Country _country;

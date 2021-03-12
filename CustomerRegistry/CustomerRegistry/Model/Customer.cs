@@ -3,7 +3,8 @@ using CustomerRegistry.Common;
 
 namespace CustomerRegistry.Model
 {
-    public class Customer : BindableBase
+    [Serializable]
+    public class Customer 
     {
         private string _id;
         private string _firstName;
@@ -30,7 +31,6 @@ namespace CustomerRegistry.Model
             set
             {
                 _firstName = value;
-                OnPropertyChanged(nameof(FirstName));
             }
         }
 
@@ -40,7 +40,6 @@ namespace CustomerRegistry.Model
             set
             {
                 _lastName = value;
-                OnPropertyChanged(nameof(LastName));
             }
         }
 
