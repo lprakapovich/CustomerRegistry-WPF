@@ -11,6 +11,10 @@ namespace CustomerRegistry.Model
         private string _homeNumber;
         private string _cellNumber;
 
+        public Phone()
+        {
+        }
+
         public Phone(string homeNumber, string cellNumber)
         {
             _homeNumber = homeNumber;

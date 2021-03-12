@@ -7,6 +7,90 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Background="Azure">
     <Grid>
-            
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="10"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="10"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
+            <TextBlock.Text>
+                <MultiBinding StringFormat="{} {0} {1}">
+                <Binding Path="Customer.FirstName"/>
+                <Binding Path="Customer.ContactData.Address.City"/>
+                </MultiBinding>
+            </TextBlock.Text>
+        </TextBlock>
+
+        <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding Customer.ContactData.Address.City}"/>
+
+        <TextBlock Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2">
+            <TextBlock.Text>
+                <MultiBinding StringFormat="{} {0} {1}">
+                    <Binding Path="Customer.ContactData.Address.PostalCode"/>
+                    <Binding Path="Customer.ContactData.Address.Street"/>
+                </MultiBinding>
+            </TextBlock.Text>
+        </TextBlock>
+
+        <TextBlock Grid.Column="1" Grid.Row="4" Text="{Binding Customer.ContactData.Address.Country}"/>
+
+        <GroupBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="4" Header="Emails">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="10"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="10"/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="1" Grid.Column="1" Content="Private"/>
+                <Label Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Content="{Binding Customer.ContactData.Email.PrivateEmail}"/>
+                <Label Grid.Row="2" Grid.Column="1" Content="Office"/>
+                <Label Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Content="{Binding Customer.ContactData.Email.WorkingEmail}"/>
+            </Grid>
+        </GroupBox>
+
+        <GroupBox Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="4" Header="Phone numbers">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="10"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="10"/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="1" Grid.Column="1" Content="Private"/>
+                <Label Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Content="{Binding Customer.ContactData.Phone.HomeNumber}"/>
+                <Label Grid.Row="2" Grid.Column="1" Content="Office"/>
+                <Label Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Content="{Binding Customer.ContactData.Email.CellNumber}"/>
+            </Grid>
+        </GroupBox>
     </Grid>
 </UserControl>

@@ -80,6 +80,7 @@
     <Compile Include="Model\Email.cs" />
     <Compile Include="Model\Phone.cs" />
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="Utils\CountryEnumConverter.cs" />
     <Compile Include="Utils\CustomerService.cs" />
     <Compile Include="ViewModel\CustomerDetailsViewModel.cs" />
     <Compile Include="ViewModel\CustomerEditorViewModel.cs" />

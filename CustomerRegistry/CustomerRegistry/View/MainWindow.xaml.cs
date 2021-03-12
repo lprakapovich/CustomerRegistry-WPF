@@ -31,10 +31,16 @@ namespace CustomerRegistry
             _dataContext = (MainViewModel) this.DataContext;
         }
 
-        private void OnOpenCustomerEditor_ButtonClick(object sender, RoutedEventArgs e)
+        private void OnEditCustomer_ButtonClick(object sender, RoutedEventArgs e)
         {
             CustomerEditorView editor = new CustomerEditorView(_dataContext.GetCustomerEditorDataContext());
             editor.Show();
+        }
+
+        private void OnOpenEditor_ButtonClick(object sender, RoutedEventArgs e)
+        {
+            CustomerEditorView editor = new CustomerEditorView(_dataContext.GetCustomerEditorDataContext());
+            editor.Show(); 
         }
     }
 }

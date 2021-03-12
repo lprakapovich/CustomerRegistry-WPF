@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CustomerRegistry.View"
+        xmlns:u="clr-namespace:CustomerRegistry.Utils"
         mc:Ignorable="d"
         Title="Customer Editor" Height="630" Width="500">
 
@@ -21,7 +22,8 @@
         <Style TargetType="Label">
             <Setter Property="Margin" Value="0 5"></Setter>
         </Style>
-    </Window.Resources>
+        <u:CountryEnumConverter x:Key="countryEnumConverter"/>
+    </Window.Resources> 
 
     <Grid>
         <Grid.RowDefinitions>
@@ -45,9 +47,9 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Label Grid.Column="0" Grid.Row="0" Content="First Name"/>
-                <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding Customer.FirstName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                 <Label Grid.Column="0" Grid.Row="1" Content="Second Name"/>
-                <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Customer.LastName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
             </Grid>
         </GroupBox>
 
@@ -95,7 +97,9 @@
                 <Label Grid.Column="0" Grid.Row="2" Content="Postal code"/>
                 <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding PostalCode}"/>
                 <Label Grid.Column="0" Grid.Row="3" Content="Country"/>
-                <TextBox Grid.Column="1" Grid.Row="3" />
+                <ComboBox Grid.Column="1" Grid.Row="3" 
+                          ItemsSource="{Binding Source={StaticResource countryEnumConverter},Path=EnumStrings}"
+                          SelectedItem="{Binding Country, Converter={StaticResource countryEnumConverter}}"/>
             </Grid>
         </GroupBox>
 
@@ -110,6 +114,5 @@
                 <Button Grid.Column="1" Content="Cancel" Command="{Binding CancelCommand}"/>
             </Grid>
         </DockPanel>
-
     </Grid>
 </Window>

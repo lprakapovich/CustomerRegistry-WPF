@@ -11,8 +11,6 @@ namespace CustomerRegistry.Utils
     {
         private List<Customer> _customers;
 
-        #region Initial Setup
-
         public CustomerService()
         {
             Customers = new List<Customer>();
@@ -23,8 +21,6 @@ namespace CustomerRegistry.Utils
             get => _customers;
             set => _customers = value;
         }
-
-        #endregion
 
         public void AddCustomer(Customer customer)
         {

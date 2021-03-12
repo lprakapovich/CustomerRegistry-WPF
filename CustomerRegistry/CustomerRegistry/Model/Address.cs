@@ -13,6 +13,10 @@ namespace CustomerRegistry.Model
         private string _street;
         private string _postalCode;
 
+        public Address()
+        {
+        }
+
         public Address(Country country, string city, string street, string postalCode)
         {
             _country = country;

@@ -10,45 +10,12 @@ namespace CustomerRegistry.ViewModel
 
         private Customer _customer;
 
-        private string _firstName;
-        private string _lastName;
-        private string _homePhone;
-        private string _cellPhone;
-        private string _workingEmail;
-        private string _privateEmail;
-        private string _street;
-        private string _city;
-        private string _postalCode;
-        private Country _country;
-
         #endregion
 
         #region Setup
         public CustomerEditorViewModel(Customer customer)
         {
-            if (customer != null)
-            {
-                //InitializeControls(customer);
-            }
-
             Customer = customer;
-            SaveCustomerCommand = new RelayCommand(e => SaveCustomerDetailsEvent.Invoke(GetCustomer()));
-            CancelCommand = new RelayCommand(e => CloseWindow(this, new EventArgs()));
-        }
-
-        private void InitializeControls(Customer customer)
-        {
-            Customer = customer;
-            FirstName = customer.FirstName;
-            LastName = customer.LastName;
-            HomePhone = customer.ContactData.Phone.HomeNumber;
-            CellPhone = customer.ContactData.Phone.CellNumber;
-            PrivateEmail = customer.ContactData.Email.PrivateEmail;
-            WorkingEmail = customer.ContactData.Email.WorkingEmail;
-            PostalCode = customer.ContactData.Address.PostalCode;
-            Country = customer.ContactData.Address.Country;
-            Street = customer.ContactData.Address.Street;
-            City = customer.ContactData.Address.City;
         }
 
         #endregion
@@ -76,12 +43,12 @@ namespace CustomerRegistry.ViewModel
 
         public string FirstName
         {
-            get => _firstName;
+            get => Customer.FirstName;
             set
             {
                 if (value != null)
                 {
-                    _firstName = value;
+                    Customer.FirstName = value;
                     OnPropertyChanged(nameof(FirstName));
                 }
             }
@@ -89,12 +56,12 @@ namespace CustomerRegistry.ViewModel
 
         public string LastName
         {
-            get => _lastName;
+            get => Customer.LastName;
             set
             {
                 if (value != null)
                 {
-                    _lastName = value;
+                    Customer.LastName = value;
                     OnPropertyChanged(nameof(LastName));
                 }
             }
@@ -102,12 +69,12 @@ namespace CustomerRegistry.ViewModel
 
         public string HomePhone
         {
-            get => _homePhone;
+            get => Customer.ContactData.Phone.HomeNumber;
             set
             {
                 if (value != null)
                 {
-                    _homePhone = value;
+                    Customer.ContactData.Phone.HomeNumber = value;
                     OnPropertyChanged(nameof(HomePhone));
                 }
             }
@@ -115,12 +82,12 @@ namespace CustomerRegistry.ViewModel
 
         public string CellPhone
         {
-            get => _cellPhone;
+            get => Customer.ContactData.Phone.CellNumber;
             set
             {
                 if (value != null)
                 {
-                    _cellPhone = value;
+                    Customer.ContactData.Phone.CellNumber = value;
                     OnPropertyChanged(nameof(CellPhone));
                 }
             }
@@ -128,12 +95,12 @@ namespace CustomerRegistry.ViewModel
 
         public string WorkingEmail 
         {
-            get => _workingEmail;
+            get => Customer.ContactData.Email.WorkingEmail;
             set
             {
                 if (value != null)
                 {
-                    _workingEmail = value;
+                    Customer.ContactData.Email.WorkingEmail = value;
                     OnPropertyChanged(nameof(WorkingEmail));
                 }
             }
@@ -141,12 +108,12 @@ namespace CustomerRegistry.ViewModel
 
         public string PrivateEmail
         {
-            get => _privateEmail;
+            get => Customer.ContactData.Email.PrivateEmail;
             set
             {
                 if (value != null)
                 {
-                    _privateEmail = value;
+                    Customer.ContactData.Email.PrivateEmail = value;
                     OnPropertyChanged(nameof(PrivateEmail));
                 }
             }
@@ -154,12 +121,12 @@ namespace CustomerRegistry.ViewModel
 
         public string Street
         {
-            get => _street;
+            get => Customer.ContactData.Address.Street;
             set
             {
                 if (value != null)
                 {
-                    _street = value;
+                    Customer.ContactData.Address.Street = value;
                     OnPropertyChanged(nameof(Street));
                 }
             }
@@ -167,12 +134,12 @@ namespace CustomerRegistry.ViewModel
 
         public string City
         {
-            get => _city;
+            get => Customer.ContactData.Address.City;
             set
             {
                 if (value != null)
                 {
-                    _city = value;
+                    Customer.ContactData.Address.City = value;
                     OnPropertyChanged(nameof(City));
                 }
             }
@@ -180,12 +147,12 @@ namespace CustomerRegistry.ViewModel
 
         public string PostalCode
         {
-            get => _postalCode;
+            get => Customer.ContactData.Address.PostalCode;
             set
             {
                 if (value != null)
                 {
-                    _postalCode = value;
+                    Customer.ContactData.Address.PostalCode = value;
                     OnPropertyChanged(nameof(PostalCode));
                 }
             }
@@ -193,10 +160,10 @@ namespace CustomerRegistry.ViewModel
 
         public Country Country 
         {
-            get => _country;
+            get => Customer.ContactData.Address.Country;
             set
             {
-                _country = value;
+                Customer.ContactData.Address.Country = value;
                 OnPropertyChanged(nameof(Country));
             }
         }
@@ -206,46 +173,22 @@ namespace CustomerRegistry.ViewModel
         #region Commands
 
         private RelayCommand _saveCustomerCommand;
-
         public RelayCommand SaveCustomerCommand
         {
-            get => _saveCustomerCommand;
-            set
-            {
-                if (value != null)
-                {
-                    _saveCustomerCommand = value;
-                }
-            }
+            get =>
+                _saveCustomerCommand ?? 
+                (_saveCustomerCommand = new RelayCommand(e =>
+                    {
+                        SaveCustomerDetailsEvent.Invoke(Customer);
+                        CloseWindow(this, new EventArgs());
+                    }
+                ));
         }
 
         private RelayCommand _cancelCommand;
-
-        public RelayCommand CancelCommand
-        {
-            get => _cancelCommand;
-            set
-            {
-                if (value != null)
-                {
-                    _cancelCommand = value;
-                }
-            }
-        }
-        #endregion
-
-        #region Private methods
-
-        private Customer GetCustomer()
-        {
-            return new Customer(
-                FirstName,
-                LastName,
-                new ContactData(
-                    new Address(Country.Algeria, City, Street, PostalCode), 
-                    new Email(WorkingEmail, PrivateEmail),
-                    new Phone(HomePhone, CellPhone)));
-        }
+        public RelayCommand CancelCommand =>
+            _cancelCommand ??
+            (_cancelCommand = new RelayCommand(e => CloseWindow(this, new EventArgs())));
 
         #endregion
     }

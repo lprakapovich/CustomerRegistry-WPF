@@ -27,11 +27,8 @@ namespace CustomerRegistry.ViewModel
         public MainViewModel()
         {
             CustomerService = new CustomerService();
-            Customers = new ObservableCollection<Customer>();
+            Customers = new ObservableCollection<Customer>(CustomerService.Customers);
             Customers.CollectionChanged += Customers_CollectionChanges;
-
-            CustomerDetailsViewModel = new CustomerDetailsViewModel();
-            Customers.Add(new Customer("Liza", "P", new ContactData(new Address(Country.Afghanistan, "v", "c", "c"), new Email(), new Phone("d", "c"))));
         }
 
         #endregion
@@ -61,9 +58,18 @@ namespace CustomerRegistry.ViewModel
                 if (value != null)
                 {
                     _selectedCustomer = value;
+                    IsSelected = true;
+                    CustomerDetailsViewModel = new CustomerDetailsViewModel(SelectedCustomer);
                     OnPropertyChanged(nameof(SelectedCustomer));
                 }
             }
+        }
+
+        
+        public bool IsSelected
+        {
+            get => SelectedCustomer != null;
+            set { OnPropertyChanged(nameof(IsSelected)); }
         }
 
         public CustomerDetailsViewModel CustomerDetailsViewModel
@@ -94,52 +100,24 @@ namespace CustomerRegistry.ViewModel
 
         public CustomerEditorViewModel GetCustomerEditorDataContext()
         {
-            var customerEditorViewModel = new CustomerEditorViewModel(SelectedCustomer);
-            customerEditorViewModel.SaveCustomerDetailsEvent += OnCustomerDetailsSaved;
-            return customerEditorViewModel;
-        }
-
-        private void OnCustomerDetailsSaved(Customer customer)
-        {
-            var optionalCustomer = Customers.FirstOrDefault(c => c.Id == customer.Id);
-
-            if (optionalCustomer == null)
+            return new CustomerEditorViewModel(SelectedCustomer ?? new Customer())
             {
-                Customers.Add(customer);
-            }
-            else
-            {
-                Customers[Customers.IndexOf(optionalCustomer)] = customer;
-            }
+                SaveCustomerDetailsEvent = OnCustomerDetailsSaved
+            };
         }
 
-        public CustomerDetailsViewModel DetailsViewModel
-        {
-            get => _customerDetailsViewModel;
-            set => _customerDetailsViewModel = value;
-        }
 
         #endregion
 
         #region Commands
 
-        private RelayCommand _deleteCustomer;
-        public RelayCommand DeleteCustomer
-        {
-            get => _deleteCustomer;
-            set
-            {
-                if (value != null)
-                {
-                    _deleteCustomer = value;
-                }
-            }
-        }
-
-      
-
+        private RelayCommand _deleteCustomerCommand;
+        public RelayCommand DeleteCustomerCommand =>
+            _deleteCustomerCommand ??
+                (_deleteCustomerCommand = new RelayCommand(
+                    ex => Customers.Remove(SelectedCustomer),
+                    canEx => SelectedCustomer != null));
         #endregion
-
 
         #region Private
 
@@ -154,8 +132,7 @@ namespace CustomerRegistry.ViewModel
                     break;
 
                 case NotifyCollectionChangedAction.Remove:
-                    MessageBox.Show("Removing a customer"); 
-
+                    MessageBox.Show("Removing a customer");
                     List<Customer> tempListOfRemovedItems = e.OldItems.OfType<Customer>().ToList();
                     CustomerService.DeleteCustomer(tempListOfRemovedItems[0].Id);
                     break;
@@ -165,14 +142,23 @@ namespace CustomerRegistry.ViewModel
                     List<Customer> tempListOfItems = e.NewItems.OfType<Customer>().ToList();
                     CustomerService.UpdateCustomer(tempListOfItems[0]);
                     MessageBox.Show("Replaced a customer" + tempListOfItems[0].FirstName);
-
+                    SelectedCustomer = null;
                     break;
             }
         }
 
-        private void RemoveCustomerFromCollection()
+        private void OnCustomerDetailsSaved(Customer customer)
         {
+            var optionalCustomer = Customers.FirstOrDefault(c => c.Id == customer.Id);
 
+            if (optionalCustomer == null)
+            {
+                Customers.Add(customer);
+            }
+            else
+            {
+                Customers[Customers.IndexOf(optionalCustomer)] = customer;
+            }
         }
 
         #endregion

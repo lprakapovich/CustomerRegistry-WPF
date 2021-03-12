@@ -10,8 +10,8 @@ namespace CustomerRegistry.Model
     {
         private string _privateEmail;
         private string _workingEmail;
-        
-        public Email() { }
+
+        public Email() : this(string.Empty, string.Empty) { }
 
         public Email(string workingEmail) : this(workingEmail, string.Empty) { }
 
