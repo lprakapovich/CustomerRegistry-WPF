@@ -6,6 +6,15 @@
              xmlns:local="clr-namespace:CustomerRegistry.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Background="Azure">
+
+    <UserControl.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="Margin" Value="0 5"/>
+        </Style>
+        <Style TargetType="GroupBox">
+            <Setter Property="Margin" Value="0 5"/>
+        </Style>
+    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10"/>
@@ -92,5 +101,7 @@
                 <Label Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Content="{Binding Customer.ContactData.Email.CellNumber}"/>
             </Grid>
         </GroupBox>
+
+        <TextBlock Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="4" Text="{Binding Customer.Id, StringFormat=ID: {0}}"/>
     </Grid>
 </UserControl>

@@ -137,6 +137,7 @@ namespace CustomerRegistry.ViewModel
                 if (value != null)
                 {
                     Customer.ContactData.Address.Street = value;
+                    ValidateProperty(nameof(Street), Street);
                     OnPropertyChanged(nameof(Street));
                 }
             }
@@ -150,6 +151,7 @@ namespace CustomerRegistry.ViewModel
                 if (value != null)
                 {
                     Customer.ContactData.Address.City = value;
+                    ValidateProperty(nameof(City), City);
                     OnPropertyChanged(nameof(City));
                 }
             }
@@ -163,6 +165,7 @@ namespace CustomerRegistry.ViewModel
                 if (value != null)
                 {
                     Customer.ContactData.Address.PostalCode = value;
+                    ValidateProperty(nameof(PostalCode), PostalCode);
                     OnPropertyChanged(nameof(PostalCode));
                 }
             }

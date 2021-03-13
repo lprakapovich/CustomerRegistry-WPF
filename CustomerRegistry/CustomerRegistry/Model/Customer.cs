@@ -55,7 +55,7 @@ namespace CustomerRegistry.Model
 
         public override string ToString()
         {
-            return FirstName + " " + LastName + ", " + Id;
+            return FirstName + " " + LastName;
         }
     }
 }

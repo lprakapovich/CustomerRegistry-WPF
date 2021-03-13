@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:u="clr-namespace:CustomerRegistry.Utils"
         mc:Ignorable="d"
-        Title="Customer Editor" Height="630" Width="500">
+        Title="Customer Editor" Height="650" Width="500">
     <Window.Resources>
         <Style TargetType="GroupBox">
             <Setter Property="Margin" Value="10 10"/>
@@ -15,10 +15,10 @@
             <Setter Property="Margin" Value="20 5"/>
         </Style>
         <Style TargetType="TextBox">
-            <Setter Property="Margin" Value="0 5"/>
+            <Setter Property="Margin" Value="0 7"/>
         </Style>
         <Style TargetType="Label">
-            <Setter Property="Margin" Value="0 5"/>
+            <Setter Property="Margin" Value="0 7"/>
         </Style>
         <u:CountryEnumConverter x:Key="countryEnumConverter"/>
         <ControlTemplate x:Key="errorTemplate">
@@ -27,7 +27,7 @@
                 <ItemsControl ItemsSource="{Binding}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding ErrorContent}" Foreground="Red"></TextBlock>
+                            <TextBlock Text="{Binding ErrorContent}" Foreground="Red" FontSize="10"></TextBlock>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
