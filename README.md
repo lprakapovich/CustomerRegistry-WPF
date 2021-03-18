@@ -1,1 +1,1 @@
-# CustomerRegistry-WPF
+# CustomerRegistry-MVVM-WPF
